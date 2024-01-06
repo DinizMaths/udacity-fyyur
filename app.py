@@ -44,7 +44,6 @@ def index():
 @app.route("/venues")
 def venues():
     all_venues = Venue.query.with_entities(
-        # Venue.id,
         Venue.city,
         Venue.state
     ).group_by(
