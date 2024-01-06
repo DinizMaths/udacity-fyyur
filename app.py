@@ -105,7 +105,7 @@ def search_venues():
 
 @app.route("/venues/<int:venue_id>")
 def show_venue(venue_id):
-    venue = Venue.query.get(venue_id)
+    venue = db.session.get(Venue, venue_id)
 
     if not venue:
         return render_template("errors/404.html")
@@ -221,7 +221,7 @@ def delete_venue(venue_id):
     error = False
 
     try:
-        venue = Venue.query.get(venue_id)
+        venue = db.session.get(Venue, venue_id)
 
         db.session.delete(venue)
         db.session.commit()
@@ -341,7 +341,7 @@ def show_artist(artist_id):
 
 @app.route("/artists/<int:artist_id>/edit", methods=["GET"])
 def edit_artist(artist_id):
-    artist = Artist.query.get(artist_id)
+    artist = db.session.get(Artist, artist_id)
 
     if not artist:
         return render_template("errors/404.html")
@@ -365,7 +365,7 @@ def edit_artist(artist_id):
 def edit_artist_submission(artist_id):
     error = False
     form = ArtistForm(request.form)
-    artist = Artist.query.get(artist_id)
+    artist = db.session.get(Artist, artist_id)
 
     if form.validate_on_submit():
         try:
@@ -401,7 +401,7 @@ def edit_artist_submission(artist_id):
 @app.route("/venues/<int:venue_id>/edit", methods=["GET"])
 def edit_venue(venue_id):
     form = VenueForm()
-    venue = Venue.query.get(venue_id)
+    venue = db.session.get(Venue, venue_id)
 
     if not venue:
         return render_template("errors/404.html")
@@ -426,7 +426,7 @@ def edit_venue(venue_id):
 def edit_venue_submission(venue_id):
     error = False
     form = VenueForm(request.form)
-    venue = Venue.query.get(venue_id)
+    venue = db.session.get(Venue, venue_id)
 
     if form.validate_on_submit():
         try:
